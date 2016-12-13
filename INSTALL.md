@@ -16,6 +16,11 @@ for Linux users to follow.
 
 # Installation Instructions
 
+After installation please verify that php is running with version 7 via:
+
+`php --version`
+
+
 ## OSX Installation with HomeBrew
 
 On an OSX system, PHP and Composer can be installed 
@@ -45,4 +50,5 @@ Composer's initialization from the root directory of this application:
 
 `composer install`
 
-At this point all dependences will be installed to the vendor/ directory.
+At this point all dependencies will be installed to the vendor/ and
+bin/ directories.
