@@ -14,14 +14,14 @@ for Linux users to follow.
  * Composer 1.2.x
 
 
-# Installation
+# Installation Instructions
 
 ## OSX Installation with HomeBrew
 
 On an OSX system, PHP and Composer can be installed 
 via [HomeBrew](http://brew.sh/).
 
-Install with:
+With HomeBrew installed, run:
 
 `brew install homebrew/php/php70 homebrew/php/composer`
 
@@ -41,6 +41,8 @@ available as an executable script.
 # Initialization
 
 With PHP and Composer installed, finish dependency setup by running
-Composer's initialization:
+Composer's initialization from the root directory of this application:
 
 `composer install`
+
+At this point all dependences will be installed to the vendor/ directory.

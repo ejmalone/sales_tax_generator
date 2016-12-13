@@ -25,8 +25,10 @@ vendor/         files automatically installed by Composer
 
 ## Building Invoices
 
-Based on your desired [example JSON file](examples/), run the following from the
-command line. For instance, to process `examples/input_1.json` for display:
+Based on your desired example JSON file from the [example subdirectory](examples/), 
+run the following from the command line through Composter.  
+
+For instance, to process`examples/input_1.json` and display its invoice:
 
 `composer run-script app input_1.json`
 
@@ -43,8 +45,7 @@ From the command line, to execute all tests:
 `bin/phpspec run`
 
 
-To execute a specific test, here is example syntax for the PHPSpec test against
-the Product class:
+To execute a specific test:
 
 `bin/phpspec run spec/models/ProductSpec.php`
 
