@@ -34,6 +34,8 @@ class Invoice {
      * The printing of our invoice, echos to standard out
      */
     public function print() {
+        
+        echo "\n";
 
         foreach ($this->order->getOrderItems() as $orderItem) {
 

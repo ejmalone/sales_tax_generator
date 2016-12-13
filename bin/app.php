@@ -8,6 +8,13 @@ use models\Order;
 use models\Invoice;
 
 
+/**
+ ** A simple script runner to build an invoice based on a file from
+ ** within the examples/ subdirectory.
+ **
+ ** @see README.md for instructions.
+ **/
+
 try {
 
     $filename = getFilename($argv);
@@ -15,8 +22,6 @@ try {
     $json     = getFileContents($filepath);
 
     $invoice = new Invoice();
-    
-    // var_dump($json);exit();
 
     $order = Order::buildFromJsonArray($json);
 
