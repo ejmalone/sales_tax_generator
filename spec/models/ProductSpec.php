@@ -9,7 +9,7 @@ use Prophecy\Argument;
 class ProductSpec extends ObjectBehavior {
 
     function getValidOptions() {
-        return ['priceCents' => 100,
+        return ['price' => 100,
                 'category'   => Product::CATEGORY_BOOK,
                 'isImported' => true];
     }
@@ -23,39 +23,31 @@ class ProductSpec extends ObjectBehavior {
       $this->shouldThrow('\InvalidArgumentException')->duringInitialize();
     }
     
-    function it_should_fail_initialization_without_priceCents() {
+    function it_should_fail_initialization_without_price() {
 
       $options = $this->getValidOptions();
-      unset($options['priceCents']);
+      unset($options['price']);
 
       $this->shouldThrow('\InvalidArgumentException')->duringInitialize($options);
       
     }
 
-    function it_should_fail_initialization_with_non_numeric_priceCents() {
+    function it_should_fail_initialization_with_non_numeric_price() {
 
       $options = $this->getValidOptions();
-      $options['priceCents'] = 'abc';
+      $options['price'] = 'abc';
       
       $this->shouldThrow('\InvalidArgumentException')->duringInitialize($options);
     }
 
-    function it_should_fail_initialization_with_negative_priceCents() {
+    function it_should_fail_initialization_with_negative_price() {
 
       $options = $this->getValidOptions();
-      $options['priceCents'] = -1;
+      $options['price'] = -1;
 
       $this->shouldThrow('\InvalidArgumentException')->duringInitialize($options);
     }
      
-    function it_should_fail_initialization_with_float_priceCents() {
-
-      $options = $this->getValidOptions();
-      $options['priceCents'] = .33;
-
-      $this->shouldThrow('\InvalidArgumentException')->duringInitialize($options);
-    }
-    
     function it_should_fail_initialization_without_category() {
 
       $options = $this->getValidOptions();
