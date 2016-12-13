@@ -26,21 +26,24 @@ vendor/         files automatically installed by Composer
 ## Building Invoices
 
 Based on your desired example JSON file from the [example subdirectory](examples/), 
-run the following from the command line through Composter.  
+run the following from the command line through Composer.  
 
-For instance, to process`examples/input_1.json` and display its invoice:
+For instance, to process `examples/input_1.json` and display its invoice:
 
 `composer run-script app input_1.json`
 
-This will parse the JSON file, populate an Order with OrderItems containing
-the Products from the JSON contents, and output a nicely formatted Invoice.
+This will:
+
+1. parse the JSON file into Products
+2. populate an Order with OrderItems containing the Products
+3. output a nicely formatted Invoice
 
 
 ## Running PHPSpec Tests
 
 [PHPSpec](http://www.phpspec.net/) is a BDD test suite in the style of RSpec. 
 
-From the command line, to execute all tests:
+To execute all tests:
 
 `bin/phpspec run`
 
