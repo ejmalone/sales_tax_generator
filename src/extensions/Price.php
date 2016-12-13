@@ -6,7 +6,14 @@ use models\Product;
 use traits\ProductValidation;
 
 /**
- * Provides price calculations for products
+ * Provides price calculations for products. 
+ * 
+ * While related to Products, it is provided as a distinct library for ease of
+ * use elsewhere, to prevent bloat in the Product class, and allow further
+ * expansion on tax and exemption abilities (e.g. loading from database).
+ *
+ * The class is proxied within the Product class for developers' ease to call 
+ * methods against tax calculation, etc.
  */
 class Price {
 
