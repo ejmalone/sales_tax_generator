@@ -3,7 +3,6 @@
 namespace extensions;
 
 use models\Product;
-use traits\ProductValidation;
 
 /**
  * Provides price calculations for products. 
@@ -16,9 +15,7 @@ use traits\ProductValidation;
  * methods against tax calculation, etc.
  */
 class Price {
-
-    use ProductValidation;
-   
+    
     const TAX_RATE    = 0.1;
     const IMPORT_RATE = 0.05;
 
@@ -32,10 +29,8 @@ class Price {
     }
 
 
-    function salesTax($product) {
+    function salesTax(Product $product) {
     
-        $this->validateProduct($product);
-
         if ($this->exemptFromSalesTax($product)) {
             return 0;
         }
@@ -43,17 +38,13 @@ class Price {
         return $this->calculateTax($product->getPrice(), self::TAX_RATE);
     }
     
-    function exemptFromSalesTax($product) {
+    function exemptFromSalesTax(Product $product) {
         
-        $this->validateProduct($product);
-
         return in_array($product->getCategory(), self::TAX_EXEMPT_CATEGORIES);
     }
 
-    function importTax($product) {
+    function importTax(Product $product) {
      
-        $this->validateProduct($product);
-
         if ($product->isImported())
             return $this->calculateTax($product->getPrice(), self::IMPORT_RATE);
         else
@@ -70,7 +61,7 @@ class Price {
      * @param float $rate tax rate (ex: 0.05)
      * @return float tax rate given the rounding up rule
      */
-    function calculateTax($price, $rate) {
+    function calculateTax(float $price, float $rate) {
        
         $taxFloatAmount = round($price * $rate, 2);
 

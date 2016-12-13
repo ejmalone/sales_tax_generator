@@ -19,11 +19,6 @@ class ProductSpec extends ObjectBehavior {
         $this->shouldHaveType(Product::class);
     }
 
-    function it_should_fail_initialization_without_options_arg() {
-
-      $this->shouldThrow('\InvalidArgumentException')->duringInitialize();
-    }
-    
     function it_should_fail_initialization_without_price() {
 
       $options = $this->getValidOptions();

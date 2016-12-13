@@ -3,12 +3,9 @@
 namespace models;
 
 use models\Product;
-use traits\ProductValidation;
 
 class OrderItem {
     
-    use ProductValidation;
-
     private $quantity;
 
     private $product;
@@ -25,26 +22,24 @@ class OrderItem {
      *
      * @throws InvalidArgumentException if either are invalid
      */
-    public function setProductAndQuantity($product, $quantity) {
+    public function setProductAndQuantity(Product $product, int $quantity) {
     
-        $this->validateProduct($product);
-        $this->validateQuantity($quantity);
-
-        $this->product  = $product;
-        $this->quantity = $quantity;
-    }
-
-    function validateQuantity($quantity) {
-        
-        if (!is_int($quantity)) {
-            throw new \InvalidArgumentException(
-                sprintf('passed quantity is not an integer, is a %s', gettype($quantity)));
-        }
-
         if ($quantity <= 0) {
             throw new \InvalidArgumentException(
                 sprintf('passed quantity amount is invalid, is %i', $quantity));
         }
 
+        $this->product  = $product;
+        $this->quantity = $quantity;
+    }
+    
+    function getProduct() {
+        
+        return $this->product;
+    }
+
+    function getQuantity() {
+        
+        return $this->quantity;
     }
 }

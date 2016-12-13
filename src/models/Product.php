@@ -20,13 +20,27 @@ class Product {
         self::CATEGORY_BEAUTY
     ];
 
+    /**
+     * @var Price used to calculate tax
+     * @see __call() below, which proxies calls to this object
+     */
     private $priceExtension;
 
+    /**
+     * @var float the price of this product
+     */
     private $price;
 
+    /**
+     * @var string the category, matching one of the CATEGORY_* constants
+     */
     private $category;
 
+    /**
+     * @var bool whether this product is imported
+     */
     private $isImported;
+
 
     function __construct() {
 
@@ -40,11 +54,11 @@ class Product {
      * @return boolean true if successfully initialized, else exception thrown
      * @throws InvalidArgumentException that bubbles up from validation
      */
-    public function initialize(array $options = []) {
+    public function initialize(array $options) {
 
         $this->validateInitializationOptions($options);
 
-        $this->price = $options['price'];
+        $this->price      = (float) $options['price'];
         $this->category   = $options['category'];
         $this->isImported = $options['isImported'];
 
@@ -59,13 +73,8 @@ class Product {
      * @return null
      * @throws InvalidArgumentException if any options fail to validate
      */
-    private function validateInitializationOptions($options) {
+    private function validateInitializationOptions(array $options) {
 
-        if (empty($options) || !is_array($options)) {
-   
-            throw new \InvalidArgumentException('options for Product must be an array');
-        }
-      
         if (!isset($options['price']) ||
             empty($options['price'])  ||
             !(is_int($options['price']) || is_float($options['price'])) || 
@@ -116,8 +125,10 @@ class Product {
 
         switch ($name) {
 
-            case 'subtotal':
-                return $this->priceExtension->$name($this, $arguments);
+            case 'salesTax':
+            case 'exemptFromSalesTax':
+            case 'importTax':
+                return $this->priceExtension->$name($this);
 
         default:
             throw new \BadMethodCallException(sprintf('Undefined method %s invoked from Product->__call', $name)); 
