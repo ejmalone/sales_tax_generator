@@ -9,9 +9,10 @@ use Prophecy\Argument;
 class ProductSpec extends ObjectBehavior {
 
     function getValidOptions() {
-        return ['price' => 100,
+        return ['price'      => 100,
                 'category'   => Product::CATEGORY_BOOK,
-                'isImported' => true];
+                'isImported' => true,
+                'name'       => 'test product'];
     }
 
     function it_is_initializable() {

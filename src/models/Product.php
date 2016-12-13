@@ -66,27 +66,32 @@ class Product {
             throw new \InvalidArgumentException('options for Product must be an array');
         }
       
-        if (!isset($options['price'])) {
-            throw new \InvalidArgumentException('priceCents must be a positive integer');
-        }
-        
-        if (!(is_int($options['price']) || is_float($options['price']))
-            || 
+        if (!isset($options['price']) ||
+            empty($options['price'])  ||
+            !(is_int($options['price']) || is_float($options['price'])) || 
             $options['price'] <= 0) {
 
-            throw new \InvalidArgumentException('price must be a positive integer');
+            throw new \InvalidArgumentException('price must be a positive integer or float');
         }
 
-        if (!(isset($options['category'])   && 
-            is_string($options['category']) && 
-            in_array($options['category'], self::ALL_CATEGORIES))) {
+        if (empty($options['category'])      ||
+            !is_string($options['category']) || 
+            !in_array($options['category'], self::ALL_CATEGORIES)) {
 
             throw new \InvalidArgumentException('category must be set and of an available Product category');
         }
 
-        if (!(isset($options['isImported']) && is_bool($options['isImported']))) {
+        if (!isset($options['isImported']) ||
+            !is_bool($options['isImported'])) {
 
             throw new \InvalidArgumentException('isImported must be set and a boolean');
+        }
+
+        if (!isset($options['name']) || 
+            empty($options['name'])  || 
+            !is_string($options['name'])) {
+            
+            throw new \InvalidArgumentException('name must be set and a valid string');
         }
     }
 

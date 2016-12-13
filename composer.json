@@ -6,7 +6,7 @@
         "bin-dir": "bin"
     },
     "scripts": {
-        "boo": "php src/foo.php"
+        "runner": "php src/runner.php"
     },
     "autoload": {"psr-0": {"": "src"}}
 }

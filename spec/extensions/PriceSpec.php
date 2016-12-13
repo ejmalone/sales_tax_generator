@@ -14,7 +14,8 @@ class PriceSpec extends ObjectBehavior {
         $product->initialize([
             'category'   => $category,
             'price'      => $price,
-            'isImported' => $isImported
+            'isImported' => $isImported,
+            'name'       => 'test product'
         ]);
 
         return $product;

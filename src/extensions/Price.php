@@ -3,11 +3,14 @@
 namespace extensions;
 
 use models\Product;
+use traits\ProductValidation;
 
 /**
  * Provides price calculations for products
  */
 class Price {
+
+    use ProductValidation;
    
     const TAX_RATE    = 0.1;
     const IMPORT_RATE = 0.05;
@@ -84,25 +87,4 @@ class Price {
         return $taxFloatAmount;
     }
 
-    /**
-     * Since PHP7 is lacking named parameters, check here
-     *
-     * @param models/Product $product
-     * @return boolean true if $product is valid, throws Exception otherwise
-     * @throws InvalidArgumentException if product isn't a valid Product
-     */
-    private function validateProduct($product) {
-
-        if (!is_object($product)) {
-            throw new \InvalidArgumentException(
-                sprintf('product is not an object, is a %s', gettype($product)));
-        }
-
-        if (!$product instanceof Product) {
-            throw new \InvalidArgumentException(
-                sprintf('product is not instance of Product, is a %s', get_class($product)));
-        }
-
-        return true;
-    }
 }
