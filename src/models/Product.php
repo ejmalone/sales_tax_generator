@@ -127,6 +127,9 @@ class Product {
         return $this->isImported;
     }
 
+    public function taxablePrice() {
+        return $this->price + $this->totalTaxes();
+    }
 
     /**
      * Automagic handling for our included extensions

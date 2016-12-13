@@ -24,19 +24,24 @@ class Invoice {
         $this->order = $order;
     }
 
+    public function format(float $value) {
+        
+        return number_format($value, 2);
+    }
+
     public function pp() {
 
         foreach ($this->order->getOrderItems() as $orderItem) {
 
             $product = $orderItem->getProduct();
 
-            echo "{$orderItem->getQuantity()} {$product->getName()}: {$product->getPrice()}\n";
+            echo "{$orderItem->getQuantity()} {$product->getName()}: {$this->format($product->taxablePrice())}\n";
         }
 
         echo "\n";
 
-        echo "Sales Taxes: {$this->order->allTaxes()}\n";
-        echo "Total: {$this->order->totalAmount()}\n";
+        echo "Sales Taxes: {$this->format($this->order->allTaxes())}\n";
+        echo "Total: {$this->format($this->order->totalAmount())}\n";
         
     }
 }
