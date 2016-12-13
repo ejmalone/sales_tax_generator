@@ -5,14 +5,14 @@ namespace extensions;
 use models\Product;
 
 /**
- * Provides price calculations for products. 
+ * Provides price, tax calculations for products. 
  * 
  * While related to Products, it is provided as a distinct library for ease of
  * use elsewhere, to prevent bloat in the Product class, and allow further
  * expansion on tax and exemption abilities (e.g. loading from database).
  *
  * The class is proxied within the Product class for developers' ease to call 
- * methods against tax calculation, etc.
+ * methods against tax calculation, etc. See src/models/Product->__call().
  */
 class Price {
     
@@ -28,7 +28,13 @@ class Price {
     function __construct() {
     }
 
-
+    
+    /**
+     * Calculates optional sales tax of a product.
+     *
+     * @param Product $product
+     * @return float
+     */
     function salesTax(Product $product) {
     
         if ($this->exemptFromSalesTax($product)) {
@@ -38,11 +44,23 @@ class Price {
         return $this->calculateTax($product->getPrice(), self::TAX_RATE);
     }
     
+    /**
+     * Determines if a product is exempt from sales tax
+     *
+     * @param Product $product
+     * @return bool true if exempt from sales tax, false otherwise
+     */
     function exemptFromSalesTax(Product $product) {
         
         return in_array($product->getCategory(), self::TAX_EXEMPT_CATEGORIES);
     }
 
+    /**
+     * Determines a product's import tax, if necessary
+     *
+     * @param Product $product
+     * @return float
+     */
     function importTax(Product $product) {
      
         if ($product->isImported())
@@ -51,6 +69,12 @@ class Price {
             return 0;
     }
 
+    /**
+     * Determines a product's entire tax amount (sales, import)
+     *
+     * @param Product $product
+     * @return float
+     */
     function totalTaxes(Product $product) {
 
         return $this->salesTax($product) + $this->importTax($product);
@@ -64,7 +88,7 @@ class Price {
      * 
      * @param float $price (ex: $14.99)
      * @param float $rate tax rate (ex: 0.05)
-     * @return float tax rate given the rounding up rule
+     * @return float the tax rate given the above stated rounding up rule
      */
     function calculateTax(float $price, float $rate) {
        

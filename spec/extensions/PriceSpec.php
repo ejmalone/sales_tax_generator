@@ -9,46 +9,36 @@ use Prophecy\Argument;
 
 class PriceSpec extends ObjectBehavior {
 
-    function createProduct($category, $price, $isImported) {
-        $product = new Product();
-        $product->initialize([
-            'category'   => $category,
-            'price'      => $price,
-            'isImported' => $isImported,
-            'name'       => 'test product'
-        ]);
-
-        return $product;
-    }
-
     function it_is_initializable() {
         $this->shouldHaveType(Price::class);
     }
 
-    function it_should_not_tax_for_exempt_categories() {
+    function it_should_not_tax_for_exempt_categories(Product $product) {
          
-        $product = $this->createProduct(Product::CATEGORY_CD, 20, false);
+        $product->getCategory()->willReturn(Product::CATEGORY_CD);
 
         $this->exemptFromSalesTax($product)->shouldReturn(false);
     }
     
-    function it_should_tax_for_non_exempt_categories() {
+    function it_should_tax_for_non_exempt_categories(Product $product) {
          
-        $product = $this->createProduct(Product::CATEGORY_BOOK, 20, false);
+        $product->getCategory()->willReturn(Product::CATEGORY_BOOK);
 
         $this->exemptFromSalesTax($product)->shouldReturn(true);
     }
 
-    function it_should_add_import_tax_for_imported_goods() {
+    function it_should_add_import_tax_for_imported_goods(Product $product) {
 
-        $product = $this->createProduct(Product::CATEGORY_BOOK, 20, true);
+        $product->getPrice()->willReturn(20.0);
+        $product->isImported()->willReturn(true);
 
         $this->importTax($product)->shouldReturn(1.0);
     }
     
-    function it_should_not_add_import_tax_for_local_goods() {
+    function it_should_not_add_import_tax_for_local_goods(Product $product) {
 
-        $product = $this->createProduct(Product::CATEGORY_BOOK, 20, false );
+        $product->getPrice()->willReturn(20.0);
+        $product->isImported()->willReturn(false);
 
         $this->importTax($product)->shouldReturn(0);
     }
@@ -66,10 +56,22 @@ class PriceSpec extends ObjectBehavior {
         $this->calculateTax(15, .05)->shouldReturn(0.75);
     }
 
-    function it_should_calculate_total_taxes_for_taxable_imported_product() {
+    function it_should_calculate_total_taxes_for_taxable_imported_product(Product $product) {
         
-        $product = $this->createProduct(Product::CATEGORY_CD, 20, true);
+        $product->getPrice()->willReturn(20.0);
+        $product->getCategory()->willReturn(Product::CATEGORY_CD);
+        $product->isImported()->willReturn(true);
+        
         $this->totalTaxes($product)->shouldReturn(3.0);
+    }
+    
+    function it_should_calculate_total_taxes_for_taxable_local_product(Product $product) {
+        
+        $product->getPrice()->willReturn(20.0);
+        $product->getCategory()->willReturn(Product::CATEGORY_CD);
+        $product->isImported()->willReturn(false);
+        
+        $this->totalTaxes($product)->shouldReturn(2.0);
     }
 
 }
