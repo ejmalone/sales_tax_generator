@@ -45,8 +45,8 @@ class Invoice {
 
         echo "\n";
 
-        echo "Sales Taxes: {$this->format($this->order->allTaxes())}\n";
-        echo "Total: {$this->format($this->order->totalAmount())}\n";
+        echo "Sales Taxes: {$this->formatFloat($this->order->allTaxes())}\n";
+        echo "Total: {$this->formatFloat($this->order->totalAmount())}\n";
         
     }
 
