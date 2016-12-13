@@ -23,7 +23,7 @@ try {
     $invoice->setOrder($order);
 
     echo "\n----------------\n";
-    echo $invoice->pp();
+    echo $invoice->print();
     echo "\n----------------\n";
     
     exit(0);
