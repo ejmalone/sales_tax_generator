@@ -35,7 +35,8 @@ class Invoice {
 
             $product = $orderItem->getProduct();
 
-            echo "{$orderItem->getQuantity()} {$product->getName()}: {$this->format($product->taxablePrice())}\n";
+            echo "{$orderItem->getQuantity()} {$this->nameOutput($product)}: " .
+                 "{$this->format($product->taxablePrice())}\n";
         }
 
         echo "\n";
@@ -43,5 +44,17 @@ class Invoice {
         echo "Sales Taxes: {$this->format($this->order->allTaxes())}\n";
         echo "Total: {$this->format($this->order->totalAmount())}\n";
         
+    }
+
+    function nameOutput($product) {
+        
+        $buffer = '';
+
+        if ($product->isImported())
+            $buffer .= 'imported ';
+
+        $buffer .= $product->getName();
+
+        return $buffer;
     }
 }
