@@ -9,51 +9,42 @@ use Prophecy\Argument;
 
 class OrderItemSpec extends ObjectBehavior {
 
-    /**
-     * Since a double passed to our tests below won't have the proxied
-     * Price extension, we'll generate real products here
-     */
-    function generateTaxableProduct($price, $isImported) {
-        
-        $product = new Product();
-        
-        $product->initialize([
-            'price' => $price,
-            'name'  => 'foo',
-            'category' => Product::CATEGORY_CD,
-            'isImported' => $isImported
-        ]);
-        
-        return $product;
-    }
-
     function it_is_initializable() {
 
         $this->shouldHaveType(OrderItem::class);
     }
 
-    function it_calculates_tax_for_a_single_product() {
+    function it_throws_an_exception_if_invalid_quantity_of_products_is_added(Product $product) {
+
+        $this->shouldThrow('\InvalidArgumentException')->duringSetProductAndQuantity($product, 0);
+        $this->shouldThrow('\InvalidArgumentException')->duringSetProductAndQuantity($product, -1);
+    }
+
+    function it_generates_subtotal_for_multiple_products(Product $product) {
         
-        $product = $this->generateTaxableProduct(10, false);
+        $product->getPrice()->willReturn(14.5);
+
+        $this->setProductAndQuantity($product, 2);
+
+        $this->subtotal()->shouldReturn(29.0);
+    }
+
+    function it_calculates_total_tax_for_a_single_product(Product $product) {
+
+        $product->totalTaxes()->willReturn(1.0);
+        
         $this->setProductAndQuantity($product, 1);
 
         $this->totalTax()->shouldReturn(1.0);
     }
     
-    function it_calculates_tax_for_multiple_products() {
+    function it_calculates_total_tax_for_multiple_products(Product $product) {
         
-        $product = $this->generateTaxableProduct(10, false);
+        $product->totalTaxes()->willReturn(1.0);
+
         $this->setProductAndQuantity($product, 2);
 
         $this->totalTax()->shouldReturn(2.0);
-    }
-
-    function it_calculates_import_tax_for_multiple_products() {
-
-        $product = $this->generateTaxableProduct(13.70, true);
-        $this->setProductAndQuantity($product, 2);
-
-        $this->totalTax()->shouldReturn(4.2);
     }
 
 }

@@ -6,8 +6,14 @@ use models\Product;
 
 class OrderItem {
     
+    /** 
+     * @var int positive number of products in this order item
+     */
     private $quantity;
-
+    
+    /**
+     * @var Product
+     */
     private $product;
 
     public function __construct() {
@@ -20,7 +26,7 @@ class OrderItem {
      * @param models\Product $product
      * @param int $quantity must be >= 1
      *
-     * @throws InvalidArgumentException if either are invalid
+     * @throws InvalidArgumentException if quantity is invalid 
      */
     public function setProductAndQuantity(Product $product, int $quantity) {
     
@@ -43,11 +49,21 @@ class OrderItem {
         return $this->quantity;
     }
 
+    /**
+     * Calculates the subtotal for this order item, given price and quantity
+     *
+     * @return float
+     */
     function subtotal() {
         
         return round($this->quantity * $this->product->getPrice(), 2);
     }
 
+    /**
+     * Calculates the total tax amount, given product's taxes and quantity
+     *
+     * @return float
+     */
     function totalTax() {
         
         // only rounding here to keep our tests happy (e.g. 4.20000 to 4.20)
