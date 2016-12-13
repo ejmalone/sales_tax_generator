@@ -3,7 +3,7 @@
 This is the take-home project for Socrata's frontend engineer application 
 by Eric Malone (ejmalone@gmail.com).
 
-Please first read the [installation instructions](INSTALLATION.md) before
+Please first read the [installation instructions](INSTALL.md) before
 attempting to execute the package.
 
 
@@ -25,7 +25,7 @@ vendor/         files automatically installed by Composer
 Based on your desired [example](examples/) JSON file, run the following from the
 command line. For instance, to process `examples/input_1.json` for display:
 
-`composer run-script runner input_1.json`
+`composer run-script app input_1.json`
 
 This will parse the JSON file, populate an Order with OrderItems containing
 the Products from the JSON file, and output a nicely formatted Invoice.
