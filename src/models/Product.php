@@ -95,6 +95,10 @@ class Product {
         return $this->price;
     }
 
+    public function getCategory() {
+        return $this->category;
+    }
+
     public function isImported() {
         return $this->isImported;
     }
