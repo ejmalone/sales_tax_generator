@@ -4,11 +4,8 @@ namespace models;
 
 use models\Order;
 use models\OrderItem;
-use traits\Validation;
 
 class Invoice {
-    
-    use Validation;
     
     private $order;
     
@@ -17,9 +14,7 @@ class Invoice {
         $this->order = null;
     }
 
-    public function setOrder($order) {
-
-        $this->validateInstanceOf($order, 'models\Order', 'order');
+    public function setOrder(Order $order) {
     
         $this->order = $order;
     }

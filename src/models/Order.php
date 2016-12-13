@@ -3,12 +3,9 @@
 namespace models;
 
 use models\OrderItem;
-use traits\Validation;
 
 class Order {
     
-    use Validation;
-
     /**
      * @var OrderItem[]
      */
