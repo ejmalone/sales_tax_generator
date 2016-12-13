@@ -25,12 +25,35 @@ class Order {
         $this->orderItems[] = $orderItem;
     }
 
-    public function orderItems() {
-
+    public function getOrderItems() {
+        return $this->orderItems;
     }
 
-    public function collectTaxes() {
-    
+    public function subtotal() {
+        
+        $subtotal = 0.0;
+
+        foreach ($this->orderItems as $orderItem) {
+            $subtotal += $orderItem->subtotal();
+        }
+
+        return $subtotal;
+    }
+
+    public function allTaxes() {
+        
+        $taxes = 0.0;
+
+        foreach ($this->orderItems as $orderItem) {
+            $taxes += $orderItem->totalTax();
+        }
+
+        return $taxes;
+    }
+
+    public function totalAmount() {
+        
+        return $this->subtotal() + $this->allTaxes();
     }
 
     /**
@@ -48,7 +71,6 @@ class Order {
 
         foreach ($jsonArray['items'] as $item) {
 
-            var_dump($item);
             $product = new Product();
             $product->initialize($item);
 

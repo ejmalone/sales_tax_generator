@@ -35,6 +35,11 @@ class Product {
      * @var string the category, matching one of the CATEGORY_* constants
      */
     private $category;
+    
+    /**
+     * @var string the descriptive name of the product
+     */
+    private $name;
 
     /**
      * @var bool whether this product is imported
@@ -60,6 +65,7 @@ class Product {
 
         $this->price      = (float) $options['price'];
         $this->category   = $options['category'];
+        $this->name       = $options['name'];
         $this->isImported = $options['isImported'];
 
         return true;
@@ -108,6 +114,10 @@ class Product {
     public function getPrice() {
         return $this->price;
     }
+    
+    public function getName() {
+        return $this->name;
+    }
 
     public function getCategory() {
         return $this->category;
@@ -126,12 +136,13 @@ class Product {
         switch ($name) {
 
             case 'salesTax':
-            case 'exemptFromSalesTax':
             case 'importTax':
+            case 'totalTaxes':
+            case 'exemptFromSalesTax':
                 return $this->priceExtension->$name($this);
 
-        default:
-            throw new \BadMethodCallException(sprintf('Undefined method %s invoked from Product->__call', $name)); 
+            default:
+                throw new \BadMethodCallException(sprintf('Undefined method %s invoked', $name)); 
 
         }
     }

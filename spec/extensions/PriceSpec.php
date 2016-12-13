@@ -66,4 +66,10 @@ class PriceSpec extends ObjectBehavior {
         $this->calculateTax(15, .05)->shouldReturn(0.75);
     }
 
+    function it_should_calculate_total_taxes_for_taxable_imported_product() {
+        
+        $product = $this->createProduct(Product::CATEGORY_CD, 20, true);
+        $this->totalTaxes($product)->shouldReturn(3.0);
+    }
+
 }

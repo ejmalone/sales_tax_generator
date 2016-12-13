@@ -42,4 +42,15 @@ class OrderItem {
         
         return $this->quantity;
     }
+
+    function subtotal() {
+        
+        return round($this->quantity * $this->product->getPrice(), 2);
+    }
+
+    function totalTax() {
+        
+        // only rounding here to keep our tests happy (e.g. 4.20000 to 4.20)
+        return round($this->quantity * $this->product->totalTaxes(), 2);
+    }
 }

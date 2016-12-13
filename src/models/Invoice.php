@@ -26,7 +26,17 @@ class Invoice {
 
     public function pp() {
 
-        var_dump('will pretty print the order', $this->order);
-        exit();
+        foreach ($this->order->getOrderItems() as $orderItem) {
+
+            $product = $orderItem->getProduct();
+
+            echo "{$orderItem->getQuantity()} {$product->getName()}: {$product->getPrice()}\n";
+        }
+
+        echo "\n";
+
+        echo "Sales Taxes: {$this->order->allTaxes()}\n";
+        echo "Total: {$this->order->totalAmount()}\n";
+        
     }
 }

@@ -51,6 +51,11 @@ class Price {
             return 0;
     }
 
+    function totalTaxes(Product $product) {
+
+        return $this->salesTax($product) + $this->importTax($product);
+    }
+
     /**
      * Returns a percentage of price, rounded up to the nearest $0.05
      * 

@@ -22,9 +22,9 @@ try {
 
     $invoice->setOrder($order);
 
-    echo "----------------";
+    echo "\n----------------\n";
     echo $invoice->pp();
-    echo "----------------";
+    echo "\n----------------\n";
     
     exit(0);
 }
