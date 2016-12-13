@@ -12,7 +12,7 @@ use models\Product;
  * expansion on tax and exemption abilities (e.g. loading from database).
  *
  * The class is proxied within the Product class for developers' ease to call 
- * methods against tax calculation, etc. See src/models/Product->__call().
+ * methods against tax calculation, etc.
  */
 class Price {
     

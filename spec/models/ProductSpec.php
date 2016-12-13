@@ -76,11 +76,11 @@ class ProductSpec extends ObjectBehavior {
       $this->shouldThrow('\InvalidArgumentException')->duringInitialize($options);
     }
 
-
     function it_should_pass_initialization_with_valid_options() {
 
       $options = $this->getValidOptions();
 
       $this->initialize($options)->shouldReturn(true);
     }
+
 }

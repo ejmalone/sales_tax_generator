@@ -12,6 +12,9 @@ class Product {
     const CATEGORY_MEDICAL = 'medical';
     const CATEGORY_BEAUTY  = 'beauty';
 
+    /**
+     * @var array a lookup table of all categories, used in validation
+     */
     const ALL_CATEGORIES = [
         self::CATEGORY_BOOK,
         self::CATEGORY_CD,
@@ -21,8 +24,8 @@ class Product {
     ];
 
     /**
-     * @var Price used to calculate tax
-     * @see __call() below, which proxies calls to this object
+     * @var Price extension class used to calculate tax
+     * @see proxied calls below
      */
     private $priceExtension;
 
@@ -53,10 +56,11 @@ class Product {
     }
 
     /**
-     * Generic population of model attributes whether from database, API, etc
+     * Generic population of model attributes, whether from database, API, etc
      * 
      * @param array $options contains keys for properties to set on this object
      * @return boolean true if successfully initialized, else exception thrown
+     *
      * @throws InvalidArgumentException that bubbles up from validation
      */
     public function initialize(array $options) {
@@ -77,6 +81,7 @@ class Product {
      * 
      * @param array $options contains keys for the properties to set on this object
      * @return null
+     *
      * @throws InvalidArgumentException if any options fail to validate
      */
     private function validateInitializationOptions(array $options) {
@@ -127,26 +132,22 @@ class Product {
         return $this->isImported;
     }
 
-    public function taxablePrice() {
-        return $this->price + $this->totalTaxes();
-    }
-
     /**
-     * Automagic handling for our included extensions
+     * @return the total taxable price, including all taxes
      */
-    function __call(string $name, array $arguments) {
-
-        switch ($name) {
-
-            case 'salesTax':
-            case 'importTax':
-            case 'totalTaxes':
-            case 'exemptFromSalesTax':
-                return $this->priceExtension->$name($this);
-
-            default:
-                throw new \BadMethodCallException(sprintf('Undefined method %s invoked', $name)); 
-
-        }
+    public function taxablePrice() {
+        return $this->getPrice() + $this->totalTaxes();
     }
+
+
+    /** 
+     ** Proxied methods to our Price extension. 
+     ** Using __call() won't work since PHPSpec can't 'see' those methods
+     **/
+
+    function salesTax()           { return $this->priceExtension->salesTax($this); }
+    function importTax()          { return $this->priceExtension->importTax($this); }
+    function totalTaxes()         { return $this->priceExtension->totalTaxes($this); }
+    function exemptFromSalesTax() { return $this->priceExtension->exemptFromSalesTax($this); }
+
 }
