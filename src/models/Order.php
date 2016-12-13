@@ -4,6 +4,10 @@ namespace models;
 
 use models\OrderItem;
 
+
+/**
+ * Aggregates OrderItems into a single Order
+ */
 class Order {
     
     /**
@@ -16,16 +20,26 @@ class Order {
         $this->orderItems = [];
     }
 
-    public function addOrderItem($orderItem) {
+    /**
+     * Adds an OrderItem to this order
+     *
+     * @param OrderItem $orderItem
+     * @return void
+     */
+    public function addOrderItem(OrderItem $orderItem) {
     
-        $this->validateInstanceOf($orderItem, 'models\OrderItem', 'orderItem');
         $this->orderItems[] = $orderItem;
     }
-
+    
     public function getOrderItems() {
         return $this->orderItems;
     }
 
+    /**
+     * Builds subtotal, sans taxes, of this order
+     *
+     * @return float
+     */
     public function subtotal() {
         
         $subtotal = 0.0;
@@ -37,6 +51,11 @@ class Order {
         return $subtotal;
     }
 
+    /**
+     * Collects and returns all taxes of order items in this order
+     *
+     * @return float
+     */
     public function allTaxes() {
         
         $taxes = 0.0;
@@ -48,15 +67,26 @@ class Order {
         return $taxes;
     }
 
+    /**
+     * Returns the total amount of this order, items and taxes
+     *
+     * @return float
+     */
     public function totalAmount() {
         
         return $this->subtotal() + $this->allTaxes();
     }
 
     /**
-     * Given an array parsed from JSON, build an order
+     * Factory method to build an order from a JSON array
      *
-     * @param array $jsonArray
+     * @see examples/input_1.json for a valid example
+     *
+     * @param array $jsonArray built from parse_json($input, true)
+     * @return Order
+     * 
+     * @throws Exception if the json is invalid (light checking done), or
+     *         for internal error when building the order
      */
     public static function buildFromJsonArray($jsonArray) {
        
