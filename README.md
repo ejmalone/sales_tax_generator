@@ -3,35 +3,40 @@
 This is the take-home project for Socrata's frontend engineer application 
 by Eric Malone (ejmalone@gmail.com).
 
+The project generates invoices from selected products, which can possibly
+have sales tax and/or import tax.
+
 Please first read the [installation instructions](INSTALL.md) before
 attempting to execute the package.
 
 
 # Directory Structure
 
-bin/            package executables. See *Running Executable* below.
+bin/            package executables. See *Script Execution* below.
 composer.json   used by Composer
 composer.lock   used by Composer
-examples/       JSON files conforming to the project's inputs
+examples/       JSON files matching the project's input specifications
 spec/           PHPSpec test files
 src/            source code
 vendor/         files automatically installed by Composer
 
 
-# Running Executables
+# Script Execution
 
 ## Building Invoices
 
-Based on your desired [example](examples/) JSON file, run the following from the
+Based on your desired [example JSON file](examples/), run the following from the
 command line. For instance, to process `examples/input_1.json` for display:
 
 `composer run-script app input_1.json`
 
 This will parse the JSON file, populate an Order with OrderItems containing
-the Products from the JSON file, and output a nicely formatted Invoice.
+the Products from the JSON contents, and output a nicely formatted Invoice.
 
 
 ## Running PHPSpec Tests
+
+[PHPSpec](http://www.phpspec.net/) is a BDD test suite in the style of RSpec. 
 
 From the command line, to execute all tests:
 
