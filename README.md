@@ -1,9 +1,6 @@
 # Introduction
 
-This is the take-home project for Socrata's frontend engineer application 
-by Eric Malone (ejmalone@gmail.com).
-
-The project generates invoices from selected products, which can possibly
+This project generates invoices from selected products, which can possibly
 have sales tax and/or import tax.
 
 Please first read the [installation instructions](INSTALL.md) before
@@ -55,9 +52,7 @@ To execute a specific test:
 
 # Project Details
 
-From Stan Rawrysz:
-
-PROBLEM ONE: SALES TAXES
+As specified:
 
 Basic sales tax is applicable at a rate of 10% on all goods, except books, food, and medical products that are exempt. Import duty is an additional sales tax applicable on all imported goods at a rate of 5%, with no exemptions.
 
