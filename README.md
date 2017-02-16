@@ -9,13 +9,13 @@ attempting to execute the package.
 
 # Directory Structure
 
-bin/            package executables. See *Script Execution* below.
-composer.json   used by Composer
-composer.lock   used by Composer
-examples/       JSON files matching the project's input specifications
-spec/           PHPSpec test files
-src/            source code
-vendor/         files automatically installed by Composer
+    bin/            package executables. See *Script Execution* below.
+    composer.json   used by Composer
+    composer.lock   used by Composer
+    examples/       JSON files matching the project's input specifications
+    spec/           PHPSpec test files
+    src/            source code
+    vendor/         files automatically installed by Composer
 
 
 # Script Execution
